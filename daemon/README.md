@@ -17,3 +17,8 @@ updated to point to the new metadata and cid.
 
 For now it will just be a CLI that can be run to sync the contents of the target directory with
 the backend and IPFS when needed.
+
+## TODOs
+- [ ] Upgrade the manifest to be a database
+- [ ] Implement the daemon
+- [ ] Implement managing local IPFS node
