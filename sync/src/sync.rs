@@ -1,5 +1,5 @@
+use anyhow::{Error, Result};
 use std::path::PathBuf;
-use anyhow::{Result, Error};
 
 use crate::manifest::Manifest;
 

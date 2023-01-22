@@ -1,8 +1,8 @@
+use anyhow::{Error, Result};
 use serde::{Deserialize, Serialize};
-use anyhow::{Result, Error};
-use std::path::PathBuf;
 use std::fs::File;
 use std::io::prelude::*;
+use std::path::PathBuf;
 
 /// Post Entry - Represents a post entry in the manifest
 /// # Fields
@@ -83,7 +83,8 @@ impl Manifest {
 
     /// Remove a post entry from the by its post ID
     pub fn remove_post_entry(&mut self, post_id: &str) {
-        self.post_entries.retain(|post_entry| post_entry.post_id != post_id);
+        self.post_entries
+            .retain(|post_entry| post_entry.post_id != post_id);
     }
 
     /// Update a post entry in the manifest  by its post ID

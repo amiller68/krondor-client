@@ -4,11 +4,11 @@ use std::io::stdin;
 use std::path::PathBuf;
 
 // mod args;
-mod sync;
 mod manifest;
+mod sync;
 
-use sync::Sync;
 use manifest::Manifest;
+use sync::Sync;
 
 const DEFAULT_MANIFEST_PATH: &str = "../content/manifest.json";
 
