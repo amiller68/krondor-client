@@ -12,8 +12,10 @@ contract Blog {
   }
   // An event to be emitted when a new post is created. It should index the postId and timestamp
   event NewPost(uint256 postId, uint256 timestamp);
-  // We keep a count of the number of posts
+  // We keep a public count of the number of posts
   uint public postCount;
+  // We keep an internal count of how many spots in the mapping are used
+  uint internal usedCount;
   // We maintain a mapping of post ids to posts
   mapping(uint => Post) posts;
 
@@ -42,8 +44,9 @@ contract Blog {
     require(bytes(_title).length > 0, 'Title is required.');
     require(bytes(_cid).length > 0, 'CID is required.');
     postCount++;
-    posts[postCount] = Post(_title, block.timestamp, _cid);
-    emit NewPost(postCount, block.timestamp);
+    usedCount++;
+    posts[usedCount] = Post(_title, block.timestamp, _cid);
+    emit NewPost(usedCount, block.timestamp);
   }
 
   // Delete a post by id
@@ -92,12 +95,21 @@ contract Blog {
   }
 
   // Get all posts
-  function getAllPosts() public view returns (Post[] memory) {
-    Post[] memory _posts = new Post[](postCount);
-    for (uint i = 1; i <= postCount; i++) {
-      _posts[i - 1] = posts[i];
+  function getAllPosts() public view returns (string[] memory, uint256[] memory, string[] memory) {
+    string[] memory titles = new string[](postCount);
+    uint256[] memory timestamps = new uint256[](postCount);
+    string[] memory cids = new string[](postCount);
+
+    uint index = 0;
+    for (uint i = 1; i <= usedCount; i++) {
+      if (posts[i].timestamp > 0) {
+        titles[index] = posts[i].title;
+        timestamps[index] = posts[i].timestamp;
+        cids[index] = posts[i].cid;
+        index++;
+      }
     }
-    return _posts;
+    return (titles, timestamps, cids);
   }
 
   // Get all posts with pagination - skip deleted posts
@@ -105,12 +117,12 @@ contract Blog {
     uint _page,
     uint _perPage
   ) public view returns (string[] memory, uint256[] memory, string[] memory) {
-    uint256 start = _page * _perPage;
-    uint256 end = start + _perPage;
+    uint start = _page * _perPage;
+    uint end = start + _perPage;
     string[] memory titles = new string[](_perPage);
     uint256[] memory timestamps = new uint256[](_perPage);
     string[] memory cids = new string[](_perPage);
-    uint256 index = 0;
+    uint index = 0;
     for (uint i = start + 1; i < end + 1; i++) {
       if (posts[i].timestamp != 0) {
         titles[index] = posts[i].title;

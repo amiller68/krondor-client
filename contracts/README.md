@@ -12,7 +12,8 @@ It can be deployed to any Ethereum network.
 - Copy `.env.example` to `.env` and fill in the values
 - Run `yarn install` to install dependencies
 
-## Maintaining 
+## Maintaining
+
 - Run 'yarn prettier' to format the code
 - Run 'yarn lint' to lint the code
 

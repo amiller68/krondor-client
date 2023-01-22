@@ -4,8 +4,8 @@
 FROM rust:1.66-slim-buster as build
 
 # create a new empty shell project
-RUN USER=root cargo new --bin daemon
-WORKDIR /daemon
+RUN USER=root cargo new --bin sync
+WORKDIR /sync
 
 # copy over your manifests
 COPY ./Cargo.lock ./Cargo.lock
@@ -19,14 +19,14 @@ RUN rm src/*.rs
 COPY ./src ./src
 
 # build for release
-RUN rm ./target/release/deps/daemon*
+RUN rm ./target/release/deps/sync*
 RUN cargo build --release
 
 # our final base
 FROM debian:buster-slim
 
 # copy the build artifact from the build stage
-COPY --from=build /daemon/target/release/daemon .
+COPY --from=build /sync/target/release/sync .
 
 # set the startup command to run your binary
-CMD ["./daemon"]
+CMD ["./sync"]
