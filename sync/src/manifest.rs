@@ -1,23 +1,69 @@
 use anyhow::{Error, Result};
+use cid::multihash::{Code, MultihashDigest};
+use cid::Cid;
 use serde::{Deserialize, Serialize};
-use std::fs::File;
-use std::io::prelude::*;
-use std::path::PathBuf;
+use std::fmt::Error;
+use std::{
+    collections::HashMap,
+    fs::{self, File},
+    io::Write,
+    path::PathBuf,
+    std::convert::TryFrom,
+};
+
+/// Impl TryFrom for Cid for Files
+impl TryFrom<File> for Cid {
+    type Error = anyhow::Error;
+    fn try_from(file: File) -> Result<Self, Self::Error> {
+        let mut hasher = Code::Sha2_256.digest();
+        std::io::copy(&mut file, &mut hasher)?;
+        let _cid = Cid::try_from(hasher.finish())?;
+        Ok(_cid)
+    }
+}
 
 /// Post Entry - Represents a post entry in the manifest
 /// # Fields
 /// * `path` - The path to the post
-/// * `post_id` - The post ID
+/// * `post_id` - The post ID. This is an integer that is unique to the post
 /// * `title` - The title of the post
 /// * `date` - The date the post was created
 /// * 'cid' - The IPFS CID of the post
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PostEntry {
     pub path: PathBuf,
-    pub post_id: String,
+    pub post_id: u32,
     pub title: String,
-    pub date: String,
-    pub cid: String,
+    pub cid: Cid,
+}
+
+impl PostEntry {
+    /// Create a new PostEntry
+    pub fn new(path: PathBuf, post_id: String, title: String, cid: String) -> Self {
+        Self {
+            path,
+            post_id,
+            title,
+            cid,
+        }
+    }
+
+    /// Create a new PostEntry from a File. Use an empty post id new posts.
+    /// These will be filled in later after syncing with the backend.
+    /// # Arguments
+    /// * `file` - The file to create the PostEntry from
+    /// * `title` - The title of the post
+    pub fn create(file: File, title: String) -> Result<Self, Error> {
+        let path = file.path();
+        let post_id = 0;
+        let cid = Cid::try_from(file)?;
+        Ok(Self {
+            path,
+            post_id,
+            title,
+            cid,
+        })
+    }
 }
 
 /// Our manifest data structure
@@ -34,7 +80,7 @@ pub struct Manifest {
     /// The address of the backend contract
     pub backend_address: String,
     /// The address of the IPFS node
-    pub post_entries: Vec<PostEntry>,
+    pub post_entries: HashMap<String, PostEntry>,
 }
 
 /// Manifest - Represents the manifest file
@@ -50,7 +96,7 @@ impl Manifest {
         Self {
             version: String::from("1.0.0"),
             backend_address,
-            post_entries: Vec::new(),
+            post_entries: HashMap::new(),
         }
     }
 
@@ -76,26 +122,35 @@ impl Manifest {
         Ok(manifest)
     }
 
+    /// Get a post entry from the manifest by its File handle
+    /// # Arguments
+    /// * `file` - The file to get the post entry for
+    /// # Returns
+    /// * `Option<PostEntry>` - The post entry
+    /// * `Error` - The error
+    pub fn get_post_entry(&self, file: &File) -> Option<&PostEntry> {
+        let path = file.path();
+        self.post_entries.get(path.to_str().unwrap())
+    }
+
     /// Add a post entry to the manifest
-    pub fn add_post_entry(&mut self, post_entry: PostEntry) {
-        self.post_entries.push(post_entry);
+    /// # Arguments
+    /// * 'post_entry' - The post entry to add
+    /// # Returns
+    /// * `Result<(), Error>` - The result
+    pub fn add_post_entry(&mut self, post_entry: PostEntry) -> Result<(), Error> {
+        self.post_entries.insert(post_entry.path, post_entry);
+        Ok(())
     }
 
-    /// Remove a post entry from the by its post ID
-    pub fn remove_post_entry(&mut self, post_id: &str) {
-        self.post_entries
-            .retain(|post_entry| post_entry.post_id != post_id);
-    }
-
-    /// Update a post entry in the manifest  by its post ID
-    pub fn update_post_entry(&mut self, post_entry: PostEntry) {
-        for entry in self.post_entries.iter_mut() {
-            if entry.post_id == post_entry.post_id {
-                entry.path = post_entry.path.clone();
-                entry.title = post_entry.title.clone();
-                entry.date = post_entry.date.clone();
-                entry.cid = post_entry.cid.clone();
-            }
-        }
+    /// Remove a post entry from the by its File handle
+    /// # Arguments
+    /// * `file` - The file to remove the post entry for
+    /// # Returns
+    /// * Result<(), Error> - The result
+    pub fn remove_post_entry(&mut self, file: &File) -> Result<(), Error> {
+        let path = file.path();
+        self.post_entries.remove(path.to_str().unwrap());
+        Ok(())
     }
 }

@@ -3,9 +3,11 @@
 use std::io::stdin;
 use std::path::PathBuf;
 
-// mod args;
+// Module imports
+mod manifest;
 mod manifest;
 mod sync;
+// mod lib;
 
 use manifest::Manifest;
 use sync::Sync;

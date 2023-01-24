@@ -12,6 +12,11 @@ contract Blog {
   }
   // An event to be emitted when a new post is created. It should index the postId and timestamp
   event NewPost(uint256 postId, uint256 timestamp);
+  // An event to be emitted when a post is deleted. It should index the postId and timestamp
+  event DeletePost(uint256 postId, uint256 timestamp);
+  // An event to be emitted when a post is updated. It should index the postId and timestamp
+  event UpdatePost(uint256 postId, uint256 timestamp);
+
   // We keep a public count of the number of posts
   uint public postCount;
   // We keep an internal count of how many spots in the mapping are used
@@ -50,9 +55,11 @@ contract Blog {
   }
 
   // Delete a post by id
-  function deletePost(uint _postId) public onlyOwner {
+  function deletePost(uint _postId) public onlyOwner (uint) {
     delete posts[_postId];
     postCount--;
+    emit DeletePost(_postId, block.timestamp);
+    return _postId;
   }
 
   // Update a post by id
@@ -60,7 +67,7 @@ contract Blog {
     uint _postId,
     string memory _title,
     string memory _cid
-  ) public onlyOwner {
+  ) public onlyOwner (uint) {
     // If both the title and cid are empty, we don't need to update anything
     require(
       bytes(_title).length > 0 || bytes(_cid).length > 0,
@@ -76,6 +83,8 @@ contract Blog {
     }
     // Update the timestamp
     posts[_postId].timestamp = block.timestamp;
+    emit UpdatePost(_postId, block.timestamp);
+    return _postId;
   }
 
   /// Content Retrieval
@@ -95,7 +104,11 @@ contract Blog {
   }
 
   // Get all posts
-  function getAllPosts() public view returns (string[] memory, uint256[] memory, string[] memory) {
+  function getAllPosts()
+    public
+    view
+    returns (string[] memory, uint256[] memory, string[] memory)
+  {
     string[] memory titles = new string[](postCount);
     uint256[] memory timestamps = new uint256[](postCount);
     string[] memory cids = new string[](postCount);

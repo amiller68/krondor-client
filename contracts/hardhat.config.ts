@@ -2,7 +2,7 @@ require('@nomiclabs/hardhat-ethers');
 require('@openzeppelin/hardhat-upgrades');
 require('@nomiclabs/hardhat-etherscan');
 require('@nomicfoundation/hardhat-chai-matchers');
-require('dotenv').config();
+require('dotenv').config({ path: '../env/.env' });
 
 module.exports = {
   solidity: '0.8.9',
