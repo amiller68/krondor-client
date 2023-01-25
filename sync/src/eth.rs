@@ -46,7 +46,19 @@ impl Tokenizable for Cid {
 }
 
 impl Tokenizable for PostEntry {
+    fn from_tokens(tokens: Vec<Token>) -> Result<Self, ethers::abi::Error> {
+        let cid = Cid::from_tokens(vec![tokens[0].clone()])?;
+        let timestamp = U256::from_tokens(vec![tokens[1].clone()])?;
+        let post_entry = PostEntry {
+            cid,
+            timestamp: timestamp.as_u64(),
+        };
+        Ok(post_entry)
+    }
 
+    fn to_tokens(&self) -> Vec<Token> {
+        vec![Token::String(self.cid.to_string()), Token::Uint(self.timestamp.into())]
+    }
 }
 
 /// Struct emitted when a post is created, deleted, or updated
