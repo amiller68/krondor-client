@@ -5,12 +5,12 @@ import { ethers } from 'hardhat';
 async function main() {
   // Get the contract factory and signer
   const gas = await ethers.provider.getGasPrice();
-  const BlogContract = await ethers.getContractFactory('Blog');
+  const CrudFs = await ethers.getContractFactory('CrudFs');
   // Deploy the contract
   console.log('Deploying blog contract...');
-  const blog = await BlogContract.deploy();
-  await blog.deployed();
-  console.log('Blog deployed to:', blog.address);
+  const crudFs = await CrudFs.deploy();
+  await crudFs.deployed();
+  console.log('Blog deployed to:', crudFs.address);
   console.log('Gas price:', gas.toString());
 }
 

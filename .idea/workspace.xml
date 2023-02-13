@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/daemon/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/sync/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/sync/src/types/Cargo.toml" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="919971a6-cb25-480e-bed5-5d8facf8f4d4" name="Changes" comment="fix: saving work - builds">
+      <change afterPath="$PROJECT_DIR$/contracts/contracts/crudFs.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/contracts/unorderedKeySetLib.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contracts/test/crudFs.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/eth/client.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/eth/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/ipfs/client.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/ipfs/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/types/cid.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/types/file_object.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/types/manifest.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/types/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/.husky/pre-commit" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/.husky/pre-commit" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/.husky/pre-push" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/.husky/pre-push" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/.prettierignore" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/.prettierignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/contracts/blog.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/hardhat.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/hardhat.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/scripts/deploy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/scripts/deploy.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/test/blog.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/sync/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/sync/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/eth.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/ipfs.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/manifest.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/sync.rs" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Solidity Library" />
+        <option value="Rust File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="6mayhwtu" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2K3RzVPKtBCwuUTaJflGPBNGq9I" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/al/krondor-client/sync/Dockerfile",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.hideNoCargoProjectNotifications/home/al/krondor-client/daemon/src/args.rs": "true",
+    "prettierjs.PrettierConfiguration.Package": "/home/al/krondor-client/contracts/node_modules/prettier",
+    "settings.editor.selected.configurable": "language.rust.cargo.check",
+    "ts.external.directory.path": "/home/al/krondor-org/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/contracts/contracts" />
+      <recent name="$PROJECT_DIR$/contracts" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/contracts" />
+      <recent name="$PROJECT_DIR$/" />
+      <recent name="$PROJECT_DIR$/contracts/env" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Sync" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="imageTag" value="sync" />
+          <option name="containerName" value="sync" />
+          <option name="sourceFilePath" value="sync/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="runExternalLinterOnTheFly" value="true" />
+    <option name="toolchainHomeDirectory" value="$PROJECT_DIR$/../.cargo/bin" />
+    <option name="version" value="2" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="919971a6-cb25-480e-bed5-5d8facf8f4d4" name="Changes" comment="" />
+      <created>1673201542378</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673201542378</updated>
+      <workItem from="1673201543554" duration="1134000" />
+      <workItem from="1673742038499" duration="4606000" />
+      <workItem from="1673918348892" duration="463000" />
+      <workItem from="1673918830401" duration="9714000" />
+      <workItem from="1674099141460" duration="2529000" />
+      <workItem from="1674229349615" duration="10692000" />
+      <workItem from="1674248425918" duration="758000" />
+      <workItem from="1674249192471" duration="7000" />
+      <workItem from="1674249208954" duration="5350000" />
+      <workItem from="1674341426187" duration="255000" />
+      <workItem from="1674341690889" duration="2883000" />
+      <workItem from="1674400302662" duration="7020000" />
+      <workItem from="1674441099686" duration="4670000" />
+      <workItem from="1674529537781" duration="5472000" />
+      <workItem from="1674611952053" duration="3733000" />
+      <workItem from="1674697030154" duration="624000" />
+      <workItem from="1674746094090" duration="4430000" />
+      <workItem from="1674750921327" duration="5453000" />
+      <workItem from="1674846604804" duration="1682000" />
+      <workItem from="1675005247130" duration="7955000" />
+      <workItem from="1675034945562" duration="2729000" />
+      <workItem from="1675038944358" duration="1510000" />
+      <workItem from="1675258749343" duration="59000" />
+      <workItem from="1675621187753" duration="5254000" />
+      <workItem from="1676240181893" duration="65000" />
+      <workItem from="1676240260549" duration="10423000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: start of daemon binary">
+      <created>1674255211146</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1674255211146</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: creates manifest on binary call">
+      <created>1674405538720</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1674405538720</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix: clippy">
+      <created>1674405617611</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1674405617611</updated>
+    </task>
+    <task id="LOCAL-00004" summary="sync: need to save work">
+      <created>1674578025607</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1674578025607</updated>
+    </task>
+    <task id="LOCAL-00005" summary="sync: need to save work">
+      <created>1674621033497</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1674621033497</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: start of daemon binary" />
+    <MESSAGE value="feat: creates manifest on binary call" />
+    <MESSAGE value="fix: clippy" />
+    <MESSAGE value="sync: need to save work" />
+    <MESSAGE value="feat: crudFs" />
+    <MESSAGE value="fix: saving work - builds" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: saving work - builds" />
+  </component>
+</project>
