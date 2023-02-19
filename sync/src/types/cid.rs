@@ -75,4 +75,8 @@ impl Cid {
     pub fn to_string(&self) -> String {
         self.cid.to_string()
     }
+    pub fn from_str(cid: String) -> Result<Self, Error> {
+        let _cid = _Cid::try_from(cid).unwrap();
+        Ok(Self { cid: _cid })
+    }
 }

@@ -9,35 +9,20 @@
     <cargoProject FILE="$PROJECT_DIR$/sync/src/types/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="919971a6-cb25-480e-bed5-5d8facf8f4d4" name="Changes" comment="fix: saving work - builds">
-      <change afterPath="$PROJECT_DIR$/contracts/contracts/crudFs.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/contracts/unorderedKeySetLib.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/test/crudFs.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/eth/client.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/eth/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/ipfs/client.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/ipfs/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/types/cid.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/types/file_object.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/types/manifest.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/types/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/.husky/pre-commit" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/.husky/pre-commit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/.husky/pre-push" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/.husky/pre-push" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/.prettierignore" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/.prettierignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/contracts/blog.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/hardhat.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/hardhat.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/scripts/deploy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/scripts/deploy.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/test/blog.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/yarn.lock" afterDir="false" />
+    <list default="true" id="919971a6-cb25-480e-bed5-5d8facf8f4d4" name="Changes" comment="feat: createFile works">
+      <change afterPath="$PROJECT_DIR$/sync/src/eth/crud_fs.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/types/crud_fs.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/utils/hash.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/utils/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/sync/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/sync/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/eth.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/ipfs.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/eth/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/eth/client.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/eth/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/eth/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/manifest.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/sync.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/types/cid.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/types/cid.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/types/file_object.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/types/file_object.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/types/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/types/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +65,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.disableDetachedFileInspection/home/al/krondor-client/sync/src/eth/client.rs": "true",
     "org.rust.hideNoCargoProjectNotifications/home/al/krondor-client/daemon/src/args.rs": "true",
     "prettierjs.PrettierConfiguration.Package": "/home/al/krondor-client/contracts/node_modules/prettier",
     "settings.editor.selected.configurable": "language.rust.cargo.check",
@@ -149,6 +135,7 @@
       <workItem from="1675621187753" duration="5254000" />
       <workItem from="1676240181893" duration="65000" />
       <workItem from="1676240260549" duration="10423000" />
+      <workItem from="1676820982187" duration="12828000" />
     </task>
     <task id="LOCAL-00001" summary="feat: start of daemon binary">
       <created>1674255211146</created>
@@ -212,6 +199,7 @@
     <MESSAGE value="sync: need to save work" />
     <MESSAGE value="feat: crudFs" />
     <MESSAGE value="fix: saving work - builds" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: saving work - builds" />
+    <MESSAGE value="feat: createFile works" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: createFile works" />
   </component>
 </project>

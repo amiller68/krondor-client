@@ -9,21 +9,24 @@ use ethers::{
     abi::{Token, Tokenizable},
 
 };
+use crate::utils::hash::hash_path;
 
 // Use our own Cid struct
 use crate::types::cid::Cid;
 
 // File Object - Represents a post entry in the manifest
 /// # Fields
-/// * `path` - The path to the post
-/// * `key` - The key of the post. This is a 32 byte hash of the path
+/// * `path` - The path to the file in the filesystem
+/// * `key` - The key of the post. This is a 32 byte hash of the path (Keccak256)
 /// * `cid` - The IPFS CID of the post
 /// * `timestamp` - The timestamp of the post
 /// * `metadata` - The metadata of the post. This is a JSON object
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct FileObject {
-    /// The key of the post
+    /// The path to the file in the filesystem
     pub path: PathBuf,
+    /// The key of the post. This is a 32 byte hash of the path (Keccak256)
+    pub key: [u8; 32],
     /// The IPFS CID of the post
     pub cid: Cid,
     /// The timestamp of the post
@@ -44,11 +47,13 @@ impl FileObject {
     /// * `Error` - If the CID cannot be created
     pub fn new(path: PathBuf) -> Result<Self, Error> {
         let file = File::open(&path)?;
+        let key = hash_path(&path)?;
         let cid = Cid::try_from(file)?;
         let timestamp = 0 as u64;
         let metadata = HashMap::new();
         Ok(Self {
             path,
+            key,
             cid,
             timestamp,
             metadata,
