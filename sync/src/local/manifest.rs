@@ -3,8 +3,12 @@
 use anyhow::{Error, Result, anyhow};
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fs::File, io::{Write, Read}, path::PathBuf};
-use crate::types::file_object::FileObject;
 use sha3::{Digest, Keccak256};
+
+use crate::types::{
+    cid::Cid,
+    crud_file::CrudFile as FileObject,
+};
 
 /// Get the key from the path of a file
 /// # Arguments

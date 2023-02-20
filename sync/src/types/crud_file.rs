@@ -22,7 +22,7 @@ use crate::types::cid::Cid;
 /// * `timestamp` - The timestamp of the post
 /// * `metadata` - The metadata of the post. This is a JSON object
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct FileObject {
+pub struct CrudFile {
     /// The path to the file in the filesystem
     pub path: PathBuf,
     /// The key of the post. This is a 32 byte hash of the path (Keccak256)
@@ -35,7 +35,7 @@ pub struct FileObject {
     pub metadata: HashMap<String, String>,
 }
 
-impl FileObject {
+impl CrudFile {
     /// New FileObject
     /// # Arguments
     /// * `path` - The path to the file
@@ -61,9 +61,10 @@ impl FileObject {
     }
 }
 
-impl Tokenizable for FileObject {
+impl Tokenizable for CrudFile {
     fn from_token(token: Token) -> Result<Self, InvalidOutputType> {
         // Reject non-tuple tokens
+        println!("Reading token: {:?}", token);
         let mut tokens = match token {
             Token::Tuple(tokens) => tokens.into_iter(),
             other => return Err(InvalidOutputType(format!(
@@ -71,6 +72,7 @@ impl Tokenizable for FileObject {
                 other
             ))),
         };
+        println!("Reading tokens: {:?}", tokens);
         // Continue with the iterator
         let path = match tokens.next() {
             Some(Token::String(path)) => PathBuf::from(path),
@@ -80,10 +82,12 @@ impl Tokenizable for FileObject {
             ))),
             None => return Err(InvalidOutputType("Expected `String`".to_string())),
         };
+        println!("Reading path: {:?}", path);
         // Determine the Key from the path
         let key = hash_path(&path).map_err(|e| {
             InvalidOutputType(format!("Could not hash path: {:?}", e))
         })?;
+println!("Reading key: {:?}", key);
         // Get the CID
         let cid = match tokens.next() {
             Some(Token::String(cid)) => Cid::from_str(cid).map_err(|e| {
@@ -95,6 +99,7 @@ impl Tokenizable for FileObject {
             ))),
             None => return Err(InvalidOutputType("Expected `String`".to_string())),
         };
+        println!("Reading cid: {:?}", cid);
         // Get the timestamp
         let timestamp = match tokens.next() {
             Some(Token::Uint(timestamp)) => timestamp.as_u64(),
@@ -104,6 +109,7 @@ impl Tokenizable for FileObject {
             ))),
             None => return Err(InvalidOutputType("Expected `Uint`".to_string())),
         };
+        println!("Reading timestamp: {:?}", timestamp);
         // Get the metadata
         let metadata = match tokens.next() {
             Some(Token::String(metadata)) => serde_json::from_str(&metadata).map_err(|e| {
@@ -115,6 +121,7 @@ impl Tokenizable for FileObject {
             ))),
             None => return Err(InvalidOutputType("Expected `String`".to_string())),
         };
+        println!("Reading metadata: {:?}", metadata);
         Ok(Self {
             path,
             key,
@@ -139,10 +146,10 @@ impl Tokenizable for FileObject {
 
 /// I'm lazy, this is what we're doin
 pub struct FileObjects {
-    pub file_objects: Vec<FileObject>,
+    pub file_objects: Vec<CrudFile>,
 }
 
-impl Into<FileObjects> for FileObject {
+impl Into<FileObjects> for CrudFile {
     fn into(self) -> FileObjects {
         FileObjects {
             file_objects: vec![self],
@@ -150,7 +157,7 @@ impl Into<FileObjects> for FileObject {
     }
 }
 
-impl From<FileObjects> for FileObject {
+impl From<FileObjects> for CrudFile {
     fn from(file_objects: FileObjects) -> Self {
         // Raise an error if there are multiple file objects
         if file_objects.file_objects.len() > 1 {
