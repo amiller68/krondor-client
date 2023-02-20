@@ -19,21 +19,14 @@ use lazy_static::lazy_static;
 use crate::types::{
     cid::Cid,
     file_object::FileObject,
-    crud_fs::CrudFs,
+    crud_fs::AsyncCrudFs,
 };
 use rand::Rng;
 use crate::eth::client::Client;
 use async_trait::async_trait;
 
 #[async_trait]
-impl CrudFs for Client {
-    /// C is for Create
-    /// Create a new file on the contract
-    /// Returns the key and timestamp of the file
-    /// # Arguments
-    /// * `FileObject` - The FileObject to create in CrudFs
-    /// # Returns
-    /// * `Result<(Bytes, U256), Error>` - The key and timestamp of the file
+impl AsyncCrudFs for Client {
     async fn create_file(&mut self, file_object: FileObject) -> Result<([u8; 32], u64), Error> {
         if !self.has_signer() {
             return Err(anyhow!("No signer available"));
@@ -76,43 +69,65 @@ impl CrudFs for Client {
         // Return the key and timestamp
         Ok((key_bytes, timestamp))
     }
+
+    async fn read_file(&mut self, key: [u8; 32]) -> Result<FileObject, Error> {
+        // Get a Bytes token from the key
+        let key = Bytes::from(key.to_vec());
+        println!("Reading file with key: {:?}", key);
+        // Encode the read_file function call
+        let data = self.contract.encode("readFile", key.into_token())?;
+        // Create a new TransactionRequest
+        let tx = TransactionRequest::new()
+            .to(self.contract.address())
+            .data(data);
+        // Call the contract
+        let result = self.provider.call(tx, None).await?;
+        // Decode the result
+        let file_object = self.contract.decode("readFile", &result)?;
+        // Convert the result to a FileObject
+        let file_object = FileObject::from_token(file_object)?;
+        // Return the FileObject
+        Ok(file_object)
+    }
 }
 
 #[cfg(test)]
 mod tests {
     #[tokio::test]
-    /// Test is creates a file
-    async fn test_create_file() {
+    /// Test creating a file
+    async fn test_crud() {
         use super::*;
         use crate::utils::hash::hash_path;
-        // Read the .env file at ../../env/.env
-        dotenv::from_path("../../env/.env").ok();
-        // Initialize the Client
-        let mut client = Client::default();
-        // Create a new FileObject to test with
-        // Generate a random 10 character string
-        // make a buffer to hold the string
-        let mut buffer = [0u8; 10];
-        // Fill the buffer with random characters
-        rand::thread_rng().fill(&mut buffer[..]);
-        // Convert the buffer to a string
-        let random_string = String::from_utf8_lossy(&buffer[..]);
 
+        // Initialize the Client from the .env file
+        dotenv::from_path("../../env/.env").ok();
+        let mut client = Client::default();
+
+        // Create a new FileObject
+        // Use a random string as the path
+        let mut buffer = [0u8; 10];
+        rand::thread_rng().fill(&mut buffer[..]);
+        let random_string = String::from_utf8_lossy(&buffer[..]);
         let path = PathBuf::from(format!(
             "/tmp/{}",
             random_string
         ));
         // Get the hash of the path
         let key = hash_path(&path).unwrap();
+        // Create a new Cid
+        let cid = Cid::from_str("QmYyQSo1c1Ym7orWxLYvCrM2EmxFTANf8i3PqQ6CMRVtPb".to_string()).unwrap();
         // Create the FileObject
         let file_object = FileObject {
             // Create a random file path
             path: path.clone(),
             key,
-            cid: Cid::from_str("QmYyQSo1c1Ym7orWxLYvCrM2EmxFTANf8i3PqQ6CMRVtPb".to_string()).unwrap(),
+            cid: cid.clone(),
             timestamp: 0,
             metadata: HashMap::new(),
         };
+
+        // C is for create
+
         // Create the file
         let result = client.create_file(file_object).await;
         // Assert that the result is Ok
@@ -123,5 +138,26 @@ mod tests {
         assert_eq!(res_key, key);
         // Assert that the timestamp is greater than 0
         assert!(timestamp > 0);
+
+        // R is for read
+
+        // Read the file
+        println!("Reading file with key: {:?}", key);
+        let result = client.read_file(key).await;
+        println!("Result: {:?}", result);
+        // Assert that the result is Ok
+        assert!(result.is_ok());
+        // Borrow the result
+        let file_object = result.unwrap();
+        // Assert that the path is the same as the one we created
+        assert_eq!(file_object.path, path);
+        // Assert that the key is the same as the one we created
+        assert_eq!(file_object.key, key);
+        // Assert that the cid is the same as the one we created
+        assert_eq!(file_object.cid.clone(), cid);
+        // Assert that the timestamp is greater than 0
+        assert!(file_object.timestamp > 0);
+
+
     }
 }

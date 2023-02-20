@@ -16,10 +16,6 @@ use std::{
 use std::thread::sleep;
 use ethers_contract_derive::EthEvent;
 use lazy_static::lazy_static;
-use crate::types::{
-    cid::Cid,
-    file_object::FileObject,
-};
 use rand::Rng;
 
 // TODO: Use abigen! macro to generate this

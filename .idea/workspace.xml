@@ -10,19 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="919971a6-cb25-480e-bed5-5d8facf8f4d4" name="Changes" comment="feat: createFile works">
-      <change afterPath="$PROJECT_DIR$/sync/src/eth/crud_fs.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/types/crud_fs.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/utils/hash.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sync/src/utils/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/sync/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/sync/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/eth/client.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/eth/client.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/eth/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/eth/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/eth/crud_fs.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/eth/crud_fs.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/types/cid.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/types/cid.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/types/crud_fs.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/types/crud_fs.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/types/file_object.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/types/file_object.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/types/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/types/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +128,7 @@
       <workItem from="1675621187753" duration="5254000" />
       <workItem from="1676240181893" duration="65000" />
       <workItem from="1676240260549" duration="10423000" />
-      <workItem from="1676820982187" duration="12828000" />
+      <workItem from="1676820982187" duration="21134000" />
     </task>
     <task id="LOCAL-00001" summary="feat: start of daemon binary">
       <created>1674255211146</created>

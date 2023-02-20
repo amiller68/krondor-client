@@ -80,3 +80,10 @@ impl Cid {
         Ok(Self { cid: _cid })
     }
 }
+
+impl PartialEq for Cid {
+    fn eq(&self, other: &Self) -> bool {
+        // Compare the Cid strings
+        self.cid.to_string() == other.cid.to_string()
+    }
+}
