@@ -76,7 +76,7 @@ impl BackendClient {
     /// - `metadata` - The metadata of the file to create
     /// # Returns
     /// - `Result<CrudFile, Error>` - The created file or an error
-    async fn create_file(
+    pub async fn create_file(
         &self,
         path: PathBuf,
         cid: Cid,
@@ -84,6 +84,8 @@ impl BackendClient {
     ) -> Result<CrudFile, Error> {
         // Convert the file path to a string
         let path_string = path.to_str().unwrap().to_string();
+        // Get the file name from the path
+        let filename = path.file_name().unwrap().to_str().unwrap().to_string();
         // Convert the CID to a string
         let cid_string = cid.to_string();
         // Convert the metadata to a string
@@ -110,6 +112,7 @@ impl BackendClient {
 
         Ok(CrudFile {
             path,
+            filename,
             key,
             cid,
             timestamp,
@@ -123,7 +126,7 @@ impl BackendClient {
     /// - `key` - The key of the file to read
     /// # Returns
     /// - `Result<CrudFile, Error>` - The read file or an error
-    async fn read_file(&mut self, key: [u8; 32]) -> Result< CrudFile, Error> {
+    pub async fn read_file(&mut self, key: [u8; 32]) -> Result< CrudFile, Error> {
         // Get a Bytes token from the key
         // let key = Bytes::from(key.to_vec());
         println!("Reading file with key: {:?}", key);

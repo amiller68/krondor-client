@@ -7,6 +7,7 @@ use ethers::{
     abi::{Token, Tokenizable, InvalidOutputType},
 };
 use std::{convert::TryFrom, fs::File, io::{Read, Write}};
+use std::path::PathBuf;
 use serde::{Deserialize, Serialize, Serializer, Deserializer};
 
 #[derive(Debug, Clone)]
@@ -37,7 +38,31 @@ impl<'de> Deserialize<'de> for Cid {
 /// Impl TryFrom for Cid for Files
 impl TryFrom<File> for Cid {
     type Error = Error;
-    // Read the file and create a CID
+    /// Read the file and create a CID
+    /// #Example
+    /// ```
+    /// use std::fs::File;
+    /// use sync::types::cid::Cid;
+    /// use std::convert::TryFrom;
+    /// use std::io::Write;
+    /// let mut file = File::create("test.txt").unwrap();
+    /// // Write some data to the file
+    /// file.write_all(b"hello").unwrap();
+    /// println!("Created file: ");
+    /// // close the file
+    /// file.sync_all().unwrap();
+    /// // Open the file
+    /// let file = File::open("test.txt").unwrap();
+    ///
+    ///
+    /// let cid = Cid::try_from(file).unwrap();
+    /// println!("{:?}", cid);
+    /// let actual = cid.to_string();
+    /// let expected = "bafkreibm6jg3ux5qumhcn2b3flc3tyu6dmlb4xa7u5bf44yegnrjhc4yeq";
+    /// assert_eq!(actual, expected);
+    /// // Remove the file
+    /// std::fs::remove_file("test.txt").unwrap();
+    /// ```
     fn try_from(file: File) -> Result<Self, Self::Error> {
         let mut hasher = Sha2_256::default();
         let mut buffer = [0; 1024];
@@ -49,9 +74,18 @@ impl TryFrom<File> for Cid {
             }
             hasher.update(&buffer[..count]);
         }
-        let hash = Code::Sha3_256.wrap(&hasher.finalize()).unwrap();
-        let cid = _Cid::new_v1(1, hash);
+        let hash = Code::Sha2_256.wrap(&hasher.finalize()).unwrap();
+        let cid = _Cid::new_v1(0x55, hash);
         Ok(Self { cid })
+    }
+}
+
+impl TryFrom<PathBuf> for Cid {
+    type Error = Error;
+    fn try_from(path: PathBuf) -> Result<Self, Self::Error> {
+        let file = File::open(path)?;
+        let cid = Cid::try_from(file)?;
+        Ok(cid)
     }
 }
 
