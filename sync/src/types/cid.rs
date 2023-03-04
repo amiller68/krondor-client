@@ -1,14 +1,16 @@
 use anyhow::{Error, Result};
 use cid::{
-    multihash::{Code, MultihashDigest, Hasher, Sha2_256},
+    multihash::{Code, Hasher, MultihashDigest, Sha2_256},
     Cid as _Cid,
 };
-use ethers::{
-    abi::{Token, Tokenizable, InvalidOutputType},
-};
-use std::{convert::TryFrom, fs::File, io::{Read, Write}};
+use ethers::abi::{InvalidOutputType, Token, Tokenizable};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::path::PathBuf;
-use serde::{Deserialize, Serialize, Serializer, Deserializer};
+use std::{
+    convert::TryFrom,
+    fs::File,
+    io::{Read, Write},
+};
 
 #[derive(Debug, Clone)]
 pub struct Cid {
@@ -83,6 +85,15 @@ impl TryFrom<File> for Cid {
 impl TryFrom<PathBuf> for Cid {
     type Error = Error;
     fn try_from(path: PathBuf) -> Result<Self, Self::Error> {
+        let file = File::open(path)?;
+        let cid = Cid::try_from(file)?;
+        Ok(cid)
+    }
+}
+
+impl TryFrom<&PathBuf> for Cid {
+    type Error = Error;
+    fn try_from(path: &PathBuf) -> Result<Self, Self::Error> {
         let file = File::open(path)?;
         let cid = Cid::try_from(file)?;
         Ok(cid)

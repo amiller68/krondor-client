@@ -1,4 +1,4 @@
-use anyhow::{Error, Result, anyhow};
+use anyhow::{anyhow, Error, Result};
 use sha3::{Digest, Keccak256};
 use std::path::PathBuf;
 

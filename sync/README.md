@@ -1,4 +1,4 @@
-## Daemon:
+## Sync:
 This is responsible for orchestrating managing content on an EVM based backend and IPFS
 It does so by maintaining a record of all content on the backend and IPFS contained in the
 target directory.

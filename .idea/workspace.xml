@@ -8,29 +8,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b05d57e-56ba-4f3d-a3e7-b001e4b7ac8f" name="Changes" comment="feat: eth backend">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sync/src/types/metadata.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/sync/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/sync/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/hello" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/welcome.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/welcome.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/sync/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/args.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/args.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/backend/eth.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/backend/mod.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/crud_fs/backend.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/crud_fs/backend.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/crud_fs/crud_fs.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/crud_fs/crud_fs.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/crud_fs/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/crud_fs/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/crud_fs/store.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/crud_fs/store.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/local/manifest.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/local/manifest.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/local/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/local/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/local/manifest.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/manifest.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/local/mod.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sync/src/store/estuary.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/store/estuary.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/store/estuary.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/store/mod.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/types/cid.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/types/cid.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sync/src/types/crud_file.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/types/crud_file.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/types/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/types/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/utils/hash.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/utils/hash.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/src/utils/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/sync/src/utils/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync/test.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Rust File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,26 +81,9 @@
       <recent name="$PROJECT_DIR$/env" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sync/src" />
       <recent name="$PROJECT_DIR$/sync/src/local" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run" />
-      <option name="emulateTerminal" value="false" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$PROJECT_DIR$/../.cargo/bin" />
@@ -105,7 +100,8 @@
       <workItem from="1676915806588" duration="409000" />
       <workItem from="1676916229984" duration="1286000" />
       <workItem from="1676917638319" duration="21156000" />
-      <workItem from="1677341026859" duration="13851000" />
+      <workItem from="1677341026859" duration="14014000" />
+      <workItem from="1677943704879" duration="7956000" />
     </task>
     <servers />
   </component>

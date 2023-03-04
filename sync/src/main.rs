@@ -1,76 +1,81 @@
-
+use clap::Parser;
 use std::io::stdin;
 use std::path::PathBuf;
 use tokio;
-use crate::args::AppArgs;
-use sync::types::crud_file::CrudFile;
-use sync::crud_fs::crud_fs::CrudFs;
-use crate::args::SubcommandType;
-use clap::Parser;
+use lazy_static::lazy_static;
 
+mod manifest;
 mod args;
+use sync::{
+    crud_fs::crud_fs::CrudFs,
+    types::{
+        cid::Cid,
+        metadata::Metadata,
+        crud_file::CrudFile
+    }
+};
 
-const DEFAULT_MANIFEST_PATH: &str = "../content/manifest.json";
+use crate::{
+    manifest::Manifest,
+    args::{
+        SyncArgs,
+        SubcommandType
+    }
+};
+
+lazy_static! {
+    static ref DEFAULT_MANIFEST_PATH: PathBuf = PathBuf::from("manifest.json");
+}
 
 /// Init the manifest file and sync the filesystem
 #[tokio::main]
 async fn main() {
     // Parse the command line arguments
-    let args = AppArgs::parse();
-    // Init CrudFs
-    let crud_fs = CrudFs::default();
+    let args = SyncArgs::parse();
     // Execute the subcommand
     match args.subcommand {
         SubcommandType::Create(args) => {
+            println!("Creating file: {}", args.path.display());
             // Get the path to the file to create
             let path = args.path;
-            // Get the metadata to store with the file
-            let metadata = args.metadata;
-            // Create a new CrudFile
-            let mut crud_file = CrudFile::new(path).unwrap();
-            // Add the metadata to the CrudFile
-            if let Some(metadata) = metadata {
-                // Create a hashmap from the metadata string
-                let metadata = serde_json::from_str(&metadata).unwrap();
-                crud_file.set_metadata(metadata);
+            // Get the Metadata from the args
+            let metadata: Metadata = match args.metadata {
+                Some(metadata) => serde_json::from_str(&metadata).unwrap(),
+                None => serde_json::from_str("{}").unwrap(),
+            };
+            // Get the manifest
+            let mut manifest: Manifest = match args.manifest {
+                Some(manifest_path) => Manifest::read(&manifest_path).unwrap(),
+                None => Manifest::read(&DEFAULT_MANIFEST_PATH).unwrap_or_else(|_| {
+                    Manifest::new("".to_string()).write(&DEFAULT_MANIFEST_PATH).unwrap();
+                    println!("Manifest Uninitialized");
+                    println!("I went and made a template ror you, go fill it out!");
+                    std::process::exit(0);
+                }),
+            };
+            // Check if the file already exists
+            if manifest.contains(&path).unwrap() {
+                println!("File already exists in the manifest");
+                println!("Eventually you will be able to update the file (this is a todo)");
+                std::process::exit(0);
             }
-            // Create the file in the backend, store, and local
-            crud_fs.create(crud_file).await.unwrap_or_else(|e| {
-                println!("Error: {}", e);
-                std::process::exit(1);
+            // Initialize the CrudFs
+            let mut crud_fs = CrudFs::new(manifest.contract_address.clone());
+            // Get the CID from the path
+            let cid = Cid::try_from(&path).unwrap();
+            println!("-> Creating with CID: {}", cid.to_string());
+            println!("-> Creating with Metadata: {}", serde_json::to_string(&metadata).unwrap());
+            // Create a new CrudFile with CrudFs
+            let crud_file= crud_fs.create(
+                path, cid, metadata
+            ).await.unwrap_or_else(|e| {
+                println!("Could not push to CrudFs: {}", e);
+                std::process::exit(0);
             });
+            // Add the CrudFile to the manifest
+            let _ = manifest.add(crud_file.clone()).unwrap();
+            // Write the manifest to the manifest file
+            let _ = manifest.write(&DEFAULT_MANIFEST_PATH).unwrap();
         }
     }
-
-
-    // Try to load the manifest and create a new one if it doesn't exist
-    // let manifest_path = PathBuf::from(DEFAULT_MANIFEST_PATH);
-    // let manifest = match Manifest::load(&manifest_path) {
-    //     Ok(manifest) => manifest,
-    //     Err(_) => {
-    //         // Prompt the user for the backend address
-    //         println!("No manifest found. Would you like to create a new one? [y/n]");
-    //         let mut input = String::new();
-    //         stdin().read_line(&mut input).unwrap();
-    //         if input.trim() == "y" {
-    //             println!("Please enter the address of the backend contract:");
-    //             let mut input = String::new();
-    //             stdin().read_line(&mut input).unwrap();
-    //             let backend_address = input.trim().to_string();
-    //             let manifest = Manifest::new(backend_address);
-    //             manifest.save(&manifest_path).unwrap();
-    //             manifest
-    //         } else {
-    //             println!("Exiting...");
-    //             std::process::exit(0);
-    //         }
-    //     }
-    // };
-    // // Create a new Sync instance
-    // let sync = Sync::new(manifest, PathBuf::from("../content"));
-    // // Sync the filesystem
-    // sync.sync().unwrap_or_else(|e| {
-    //     println!("Error: {}", e);
-    //     std::process::exit(1);
-    // });
 }

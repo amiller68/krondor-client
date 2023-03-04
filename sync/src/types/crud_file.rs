@@ -1,18 +1,12 @@
 use anyhow::{Error, Result};
+use ethers::abi::{InvalidOutputType, Token, Tokenizable};
 use serde::{Deserialize, Serialize};
-use std::{
-    collections::HashMap,
-    fs::File,
-    path::PathBuf,
-};
 use std::io::ErrorKind::InvalidInput;
-use ethers::{
-    abi::{Token, Tokenizable, InvalidOutputType},
-};
+use std::{collections::HashMap, fs::File, path::PathBuf};
 
 use crate::utils::hash::hash_path;
 // Use our own Cid struct
-use crate::types::cid::Cid;
+use crate::types::{cid::Cid, metadata::Metadata};
 
 // File Object - Represents a post entry in the manifest
 /// # Fields
@@ -34,7 +28,7 @@ pub struct CrudFile {
     /// The timestamp of the post
     pub timestamp: u64,
     /// The metadata of the post. This is a JSON object
-    pub metadata: HashMap<String, String>,
+    pub metadata: Metadata,
 }
 
 impl CrudFile {
@@ -53,7 +47,7 @@ impl CrudFile {
         let key = hash_path(&path)?;
         let cid = Cid::try_from(file)?;
         let timestamp = 0 as u64;
-        let metadata = HashMap::new();
+        let metadata = Metadata::new();
         Ok(Self {
             path,
             filename,
@@ -69,7 +63,7 @@ impl CrudFile {
     /// * `metadata` - The metadata to set
     /// # Returns
     /// Result<(), Error>
-    pub fn set_metadata(&mut self, metadata: HashMap<String, String>) -> Result<(), Error> {
+    pub fn set_metadata(&mut self, metadata: Metadata) -> Result<(), Error> {
         self.metadata = metadata;
         Ok(())
     }
@@ -90,18 +84,22 @@ impl Tokenizable for CrudFile {
         // Reject non-tuple tokens
         let mut tokens = match token {
             Token::Tuple(tokens) => tokens.into_iter(),
-            other => return Err(InvalidOutputType(format!(
-                "Expected `Tuple`, got {:?}",
-                other
-            ))),
+            other => {
+                return Err(InvalidOutputType(format!(
+                    "Expected `Tuple`, got {:?}",
+                    other
+                )))
+            }
         };
         // Continue with the iterator
         let path = match tokens.next() {
             Some(Token::String(path)) => PathBuf::from(path),
-            Some(other) => return Err(InvalidOutputType(format!(
-                "Expected `String`, got {:?}",
-                other
-            ))),
+            Some(other) => {
+                return Err(InvalidOutputType(format!(
+                    "Expected `String`, got {:?}",
+                    other
+                )))
+            }
             None => return Err(InvalidOutputType("Expected `String`".to_string())),
         };
         // Get the filename from the path
@@ -110,38 +108,41 @@ impl Tokenizable for CrudFile {
             None => return Err(InvalidOutputType("Expected `String`".to_string())),
         };
         // Determine the Key from the path
-        let key = hash_path(&path).map_err(|e| {
-            InvalidOutputType(format!("Could not hash path: {:?}", e))
-        })?;
+        let key = hash_path(&path)
+            .map_err(|e| InvalidOutputType(format!("Could not hash path: {:?}", e)))?;
         // Get the CID
         let cid = match tokens.next() {
-            Some(Token::String(cid)) => Cid::from_str(cid).map_err(|e| {
-                InvalidOutputType(format!("Expected `String`, got {:?}", e))
-            })?,
-            Some(other) => return Err(InvalidOutputType(format!(
-                "Expected `String`, got {:?}",
-                other
-            ))),
+            Some(Token::String(cid)) => Cid::from_str(cid)
+                .map_err(|e| InvalidOutputType(format!("Expected `String`, got {:?}", e)))?,
+            Some(other) => {
+                return Err(InvalidOutputType(format!(
+                    "Expected `String`, got {:?}",
+                    other
+                )))
+            }
             None => return Err(InvalidOutputType("Expected `String`".to_string())),
         };
         // Get the timestamp
         let timestamp = match tokens.next() {
             Some(Token::Uint(timestamp)) => timestamp.as_u64(),
-            Some(other) => return Err(InvalidOutputType(format!(
-                "Expected `Uint`, got {:?}",
-                other
-            ))),
+            Some(other) => {
+                return Err(InvalidOutputType(format!(
+                    "Expected `Uint`, got {:?}",
+                    other
+                )))
+            }
             None => return Err(InvalidOutputType("Expected `Uint`".to_string())),
         };
         // Get the metadata
         let metadata = match tokens.next() {
-            Some(Token::String(metadata)) => serde_json::from_str(&metadata).map_err(|e| {
-                InvalidOutputType(format!("Expected JSON `String`, got {:?}", e))
-            })?,
-            Some(other) => return Err(InvalidOutputType(format!(
-                "Expected `String`, got {:?}",
-                other
-            ))),
+            Some(Token::String(metadata)) => serde_json::from_str(&metadata)
+                .map_err(|e| InvalidOutputType(format!("Expected JSON `String`, got {:?}", e)))?,
+            Some(other) => {
+                return Err(InvalidOutputType(format!(
+                    "Expected `String`, got {:?}",
+                    other
+                )))
+            }
             None => return Err(InvalidOutputType("Expected `String`".to_string())),
         };
         Ok(Self {
@@ -161,8 +162,8 @@ impl Tokenizable for CrudFile {
         let metadata = serde_json::to_string(&self.metadata).unwrap();
         Token::Tuple(vec![
             Token::String(path.to_string()),
-            Token::String(cid.to_string()),
-            Token::String(metadata.to_string()),
+            Token::String(cid),
+            Token::String(metadata),
         ])
     }
 }
